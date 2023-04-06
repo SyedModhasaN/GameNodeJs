@@ -1,0 +1,47 @@
+body{
+    background:linear-gradient(120deg, #2980b9, #8e44ad);
+}
+#gameContainer{
+    margin-top: 20px;
+}
+
+.table-content{
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-52%, -52%);
+    height: auto;
+    width: 400px;
+    border-radius: 10px;
+    background: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: #8e44ad;
+    font-size: larger;
+    text-align: center;
+    
+}
+i.fab{
+    position: relative;
+    background: #eeeeee;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #cccccc;
+    cursor: pointer;
+}
+i.fab::after{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #dddddd;
+    content: '';
+}
+.reveal::after, .matched::after {
+    content: none !important;
+}

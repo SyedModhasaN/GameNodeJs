@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="style.css" > -->
+    <title>Memory Blocks Game</title>
+    <style>
+        body{
+    background:linear-gradient(120deg, #2980b9, #8e44ad);
+}
+#gameContainer{
+    margin-top: 20px;
+}
+
+.table-content{
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-52%, -52%);
+    height: auto;
+    width: 400px;
+    border-radius: 10px;
+    background: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: #8e44ad;
+    font-size: larger;
+    text-align: center;
+    
+}
+i.fab{
+    position: relative;
+    background: #eeeeee;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #cccccc;
+    cursor: pointer;
+}
+i.fab::after{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #dddddd;
+    content: '';
+}
+.reveal::after, .matched::after {
+    content: none !important;
+}
+    </style>
+</head>
+<body>
+    
+    <table class="table-content">
+    <tr> <td><lable>Game Difficulty</lable></tr></td></tr>
+    <tr><td><input id="difficulty" type="number" value="4"></td></tr>
+    <tr><td><label>(Allowed values: 2, 4, 6, 8, 10)</label></td></tr>
+    <tr><td><button onclick="startGame();">Start Game</button></td></tr>
+    <tr><td><div id="gameContainer"></div> </td></tr>
+    <script src = " https://kit.fontawesome.com/9912e44b05.js " crossorigin = " anonymous " > </script>
+    <script type="text/javascript">
+        var brands=[ "adobe" , "algolia" , "amazon" , "android" , "apple" , "audible" , "behance" , "bitcoin" ,"blackberry" , "chrome" , "ebay" , "facebook" , "firefox" , "git" , "google" , "instagram" ,"imdb" , "itunes" , "linkedin" , "joomla" , "microsoft" , "opera" , "patreon" , "paypal" ,"pinterest" , "react" , "reddit" , "safari" , "salesforce" , "sketch" , "skype" , "slack" ,"snapchat" , "stack-overflow" , "stripe" , "telegram" , "tripadvisor" , "tumblr" , "twitch" ,"twitter" , "uber" , "ubuntu" , "unity" , "viber" , "vimeo" , "whatsapp" , "wordpress" , "xbox" ,"yahoo" , "youtube" ] ;
+        var allowed = [2, 4, 6, 8, 10];
+        function startGame() {
+            var gameContainer= document.getElementById('gameContainer');
+            gameContainer.innerHTML = '';
+            var difficulty = parseInt(document.getElementById('difficulty').value);    
+            if (allowed.indexOf(difficulty) != -1){
+                var brandsCopy = JSON.parse(JSON.stringify(brands));
+                var pickedBrands = [];
+                for (var i = (difficulty * difficulty) / 2; i > 0; i--){
+                    var randomBrand = brandsCopy.splice(Math.floor(Math.random() * brandsCopy.length), 1);
+                    pickedBrands.push(randomBrand);
+                    pickedBrands.push(randomBrand);
+                }
+                for (var i = 0; i < difficulty; i++){
+                    var row = document.createElement('div');
+                    for(var j = 0; j < difficulty; j++) {
+                        var brand = document.createElement('i');
+                        brand.classList.add('fab');
+                        brand.classList.add('fa-' + pickedBrands.splice(Math.floor(Math.random() * pickedBrands.length), 1));
+                        row.append(brand);
+                        brand.addEventListener('click', function(event){
+                            var revealed =document.querySelectorAll('.reveal');
+                            if (revealed.length ==2){
+                                if (revealed[0].getAttribute('class') == revealed[1].getAttribute('class')){
+                                    revealed[0].classList.add('matched');
+                                    revealed[1].classList.add('matched');
+
+                                }
+                                revealed[0].classList.remove('reveal');
+                                revealed[1].classList.remove('reveal');
+                            }
+                            event.currentTarget.classList.add('reveal');
+                        });
+
+                    }
+                    gameContainer.append(row);
+                }
+            }else { 
+                alert('Invalid value found on diffculty !');
+            }
+        };
+                   
+    </script>
+    </table>
+</body>
+</html>
